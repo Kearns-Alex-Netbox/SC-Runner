@@ -581,7 +581,7 @@ Class RuntimeEngine
 
 	Const MILLISECONDS_IN_SECONDS As Integer = 1000
 
-	Dim sqlapi                  As New SQL_API()
+	'Dim sqlapi                  As New SQL_API()
 	Dim CurrentState            As UShort = 0
 	Dim thisServerInfo          As ThreadComm
 	Dim thisCurrentLineTextBox  As TextBox
@@ -2483,14 +2483,6 @@ Class RuntimeEngine
 			End If
 		End If
 
-		' try to open up the database associated
-		If Bypass = False Then
-			If sqlapi.SetDatabase(thisModel, WebResponse) = False Then
-				errorMessage = "Could not Set up Database: " & WebResponse
-				GoTo DONE_NF
-			End If
-		End If
-
 #If 1
 		' check to see if we need to change to a static IP
 		If thisIsFixedIP = true Then
@@ -2542,9 +2534,19 @@ Class RuntimeEngine
 		thisServerInfo.IPStable = 1
 
 		' set up our values for some of the variables
+
+		Dim sqlapi As New SQL_API()
 		sqlapi._Username = user
 		sqlapi._Password = pass
-		sqlapi.OpenDatabase("")
+
+		' try to open up the database associated
+		If Bypass = False Then
+			If sqlapi.SetDatabase(thisModel, WebResponse) = False Then
+				errorMessage = "Could not Set up Database: " & WebResponse
+				GoTo DONE_NF
+			End If
+		End If
+		
 		thisSerialNumber = obj.serial.ToString
 		thisCPUVersion = obj.version.ToString.Substring(1)
 		commandFile = My.Settings.CommandDirectory & "\" & thisModel & ".txt"

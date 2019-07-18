@@ -11,8 +11,8 @@ Public Class JSON_API
 	Const IP_TYPE_NONE	As String = "none"
 
 	Const MS_INSECONDS	As Integer = 1000
-	Const CONN_TIMEOUT	As Integer =  500 '3 * MS_INSECONDS
-	Const REQ_TIMEOUT   As Integer = MS_INSECONDS * 5
+	Const CONN_TIMEOUT	As Integer = 1 * MS_INSECONDS
+	Const REQ_TIMEOUT   As Integer = 5 * MS_INSECONDS
 
     ''' <summary>
 	''' 

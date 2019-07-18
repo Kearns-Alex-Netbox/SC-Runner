@@ -404,7 +404,7 @@
 End Module
 
 Public Class Login
-	Dim sqlapi As New SQL_API()
+	'Dim sqlapi As New SQL_API()
 
 	Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 		L_Version.Text = "V:" & Application.ProductVersion
@@ -430,6 +430,8 @@ Public Class Login
 	Private Sub B_Login_Click() Handles B_Login.Click
 		user = TB_User.Text
 		pass = TB_Password.Text
+
+		Dim sqlapi As New SQL_API()
 
 		sqlapi._Username = user
 		sqlapi._Password = pass

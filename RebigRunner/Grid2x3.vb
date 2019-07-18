@@ -51,6 +51,7 @@ Public Class Grid2x3
 			ServerThreads(i).TimeStamp = ""
 			CloseArray(i).Enabled = False
 			AddHandler CloseArray(i).Click, AddressOf Close_Click
+			AddHandler IPArray(i).Click, AddressOf IP_Click
 			DocumentArray(i).Enabled = False
 			AddHandler DocumentArray(i).Click, AddressOf Document_Click
 			IndicatorArray(i).BackColor = Color.Gray
@@ -96,6 +97,10 @@ Public Class Grid2x3
 		Dim number As Integer = (sender.Name.Substring("close".Length)) - 1 ' subtract 1 because this is a 0 base array
 
 		CloseServer(number)
+	End Sub
+
+	Private Sub IP_Click(ByVal sender As Object, ByVal e As EventArgs)
+		Process.Start("http://" & sender.text)
 	End Sub
 
 	Private Sub SetupButton_Click() Handles SetupButton.Click

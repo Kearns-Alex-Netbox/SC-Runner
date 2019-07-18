@@ -50,9 +50,11 @@ Public Class SQL_API
 	End Property
 
 	Public Function SetDatabase(byref model As string, byRef results As String) As Boolean
-		If CloseDatabase(conn, results) = False Then
-			Return False
-		End If
+		'If conn IsNot Nothing Then
+		'	If CloseDatabase(conn, results) = False Then
+		'		Return False
+		'	End If
+		'End If
 
 		Select Case model
 			Case RuntimeEngine.MODEL_D7
@@ -89,6 +91,7 @@ Public Class SQL_API
 		conn = New SqlConnection("server=tcp:nas1,1622;Database=" & database & ";User ID=" & username & ";password= " & password & ";")
 		Try
 			conn.Open()
+			thisCMD = New SqlCommand("", conn)
 			thisCMD = conn.CreateCommand
 
 			'Get the logged in user name from Windows to the database.
@@ -614,9 +617,9 @@ Public Class SQL_API
 			'------------------------------'
 
 			'Start our transaction. Must assign both transaction object and connection to the command object for a pending local transaction.
-			transaction = conn.BeginTransaction("Burn In Transaction")
-			myCmd.Connection = conn
-			myCmd.Transaction = transaction
+			'transaction = conn.BeginTransaction("Burn In Transaction")
+			'myCmd.Connection = conn
+			'myCmd.Transaction = transaction
 
 			'Create a generic comment for the new system update from the user.
 			If AddSystemBurnComment(myCmd, systemSerialNumber, result, loops, errors, today) = False Then
@@ -632,7 +635,7 @@ Public Class SQL_API
 				Return False
 			End If
 
-			transaction.Commit()
+			'transaction.Commit()
 			Return True
 		Catch ex As Exception
 			result = ex.Message
@@ -664,9 +667,9 @@ Public Class SQL_API
 								"WHERE SerialNumber = '" & systemSerialNumber & "' and [dbo.SystemStatus.id] != (Select id from SystemStatus where name = 'Scrapped')"
 
 			'Start our transaction. Must assign both transaction object and connection to the command object for a pending local transaction.
-			transaction = conn.BeginTransaction("Burn In Transaction")
-			thisCMD.Connection = conn
-			thisCMD.Transaction = transaction
+			'transaction = conn.BeginTransaction("Burn In Transaction")
+			'thisCMD.Connection = conn
+			'thisCMD.Transaction = transaction
 
 			thisCMD.ExecuteNonQuery()
 
@@ -684,7 +687,7 @@ Public Class SQL_API
 			End If
 			'End If
 
-			transaction.Commit()
+			'transaction.Commit()
 			Return True
 		Catch ex As Exception
 			result = ex.Message
