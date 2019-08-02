@@ -1,0 +1,626 @@
+#D7 Test
+
+PRINT "INITILIZATION"
+VAR $LOOPCOUNT = 1
+
+'Moved TOP to here so we can end with the auto filter after reset test
+:TOP
+PRINT "Starting loop " $LOOPCOUNT
+
+'Set Word (3536 + 48) 3584 1
+SIMULATEIO
+
+'Set Influent Pressure 7826 10.0
+ANALOGVALUE 1 10.0
+
+'Set Effluent Pressure 7828 10.0
+ANALOGVALUE 2 10.0
+
+'Set Pressure Enable 7830 18.0
+ANALOGVALUE 3 18.0
+
+'Set Flow Rate 7832 10.0
+ANALOGVALUE 4 10.0
+
+'Set Stop High
+DIGINVALUE 1 1
+
+'Set Pump Confirm High
+DIGINVALUE 2 1
+
+'Set Start Low
+DIGINVALUE 3 0
+
+'Set ??? Low
+DIGINVALUE 4 0
+
+'Set the Effluent Valve close delay [seconds] 3536
+SETPARAM 1 0
+
+'Set the Regen Valve Open Delay [seconds] 3537
+SETPARAM 2 5
+
+'Set the Effluent Valve to Bump Start Time [seconds] 3540
+SETPARAM 5 5
+
+'Set the Regen Valve Close Delay [seconds] 3541
+SETPARAM 6 5
+
+'Set the Regen Valve Open to Filter_Precoat Time [seconds] 3543
+SETPARAM 8 5
+
+'Set the Filter_Precoat Pump Enable OFF [boolean] 3550
+SETPARAM 15 0
+
+'Set the Bump Set Off Time [seconds] 3551
+SETPARAM 16 5
+
+'Set the Bump Set On Delay [seconds] 3552
+SETPARAM 17 2
+
+'Set the Main Pump on to Effluent Open Delay [seconds] 3553
+SETPARAM 18 6
+
+'Set the Auto Bump Loops [# of times] 3554
+SETPARAM 19 3
+
+'Set the Filter_Precoat Cycle Time [1 minutes as 60 seconds] 3555
+SETPARAM 20 60
+
+'Set the Bump Auto/Man Off Time [seconds] 3556
+SETPARAM 21 5
+
+'Set the Bump Auto/Man On Time [seconds] 3557
+SETPARAM 22 5
+
+'Set the Flex Clean Loop Time [seconds] 3569
+SETPARAM 34 20
+
+'Set the Filter_Precoat Pump off After Regen Close Delay [seconds] 3570
+SETPARAM 35 5
+
+'Set the Flex Clean Loop Delay [1 minutes as 60 seconds] 3571
+SETPARAM 36 60
+
+'Set the Tank Drain option OFF [boolean] 3572
+SETPARAM 37 0
+
+'Set the Tank Drain on Time [seconds] 3573
+SETPARAM 38 5
+
+'Set the Filter_Precoat Line option OFF [boolean] 3575
+SETPARAM 40 0
+
+'Set the Precoar Line on Time [seconds] 3577
+SETPARAM 42 5
+
+'Set the air pressure to ANALOG 3583
+SETPARAM 48 1
+
+'Set the Pump Run Confirm Time [seconds] 3592
+SETPARAM 57 5
+
+
+'Set the Bump Schedule to OFF [boolean]
+SETWORD 3134 0
+
+'Set the Block Start to OFF [boolean]
+SETWORD 3182 0
+
+'Set the Block Stop to OFF [boolean]
+SETWORD 3188 0
+
+'Set the Drain Schedule to OFF [boolean]
+SETWORD 3206 0
+
+'Set the Filter_Precoat Schedule to OFF [boolean]
+SETWORD 3254 0
+
+'Set the Delta-P to be NONE
+SETWORD 3431 0
+
+'Seconds before trigger
+SETWORD 3434 5
+
+'***************************************************************'
+IF CPU_VERSION 3.9.0
+
+'Set the Auto Filter After Restart to ON [boolean]
+SETWORD 3604 1
+
+'Set the Remote Start/Stop to OFF [boolean]
+SETWORD 3605 0
+
+'Set the Alarm Relay Ouput to OFF [boolean]
+SETWORD 3606 0
+
+ENDIF
+'***************************************************************'
+
+'Set the Delta-P Difference Value [float]
+SETFLOAT 7432 12.0
+
+'Set the Low Pressure Cutoff [float]
+SETFLOAT 7468 50.0
+
+'Clear any existing alarms
+CLEARALARMS
+
+MODE Idle
+
+LOOPTILL STATE Idle 00:00:10
+
+' ****************************
+' FILTER
+' ****************************
+PRINT "Filter"
+
+MODE Filter
+
+LOOPTILL STATE Filter_Pump_On 00:00:10
+LOOPTILL STATE Filter_Open_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat 00:00:10
+LOOPTILL STATE Filter_Open_Effluent 00:01:10
+LOOPTILL STATE Filter_Close_Regen 00:00:10
+LOOPTILL STATE Filter 00:00:10
+
+MODE Idle
+LOOPTILL STATE Idle 00:00:10
+
+' *************************
+' FILTER: PRECOAT PUMP
+' *************************
+PRINT "Filter: Precoat Pump"
+
+'Set the Precoat Pump Enable ON [boolean]
+SETWORD 3550 1
+
+MODE Filter
+
+LOOPTILL STATE Filter_Pump_On 00:00:10
+LOOPTILL STATE Filter_Open_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat 00:00:10
+LOOPTILL STATE Filter_Main_Pump_On 00:01:10
+LOOPTILL STATE Filter_Open_Effluent 00:00:10
+LOOPTILL STATE Filter_Close_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat_Pump_Off 00:00:10
+LOOPTILL STATE Filter 00:00:10
+
+'Set the Precoat Pump Enable OFF [boolean]
+SETWORD 3550 0
+
+MODE Idle
+LOOPTILL STATE Idle 00:00:10
+
+' **********
+' BUMP TEST
+' **********
+PRINT "Bump: Idle"
+
+MODE Bump_Auto
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:10
+
+LOOPTILL STATE Filter_Pump_On 00:01:00
+LOOPTILL STATE Filter_Open_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat 00:00:10
+LOOPTILL STATE Filter_Open_Effluent 00:01:10
+LOOPTILL STATE Filter_Close_Regen 00:00:10
+LOOPTILL STATE Filter 00:00:10
+
+PRINT "Bump: Filter"
+
+MODE Bump_Auto
+LOOPTILL STATE Idle_Close_Effluent 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:10
+
+LOOPTILL STATE Filter_Pump_On 00:01:00
+LOOPTILL STATE Filter_Open_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat 00:00:10
+LOOPTILL STATE Filter_Open_Effluent 00:01:10
+LOOPTILL STATE Filter_Close_Regen 00:00:10
+LOOPTILL STATE Filter 00:00:10
+
+PRINT "Bump: Delta-P NONE"
+
+'Force the DeltaP to be out of range so we bump
+ANALOGVALUE 1 20.0
+
+LOOPIN STATE Filter 00:00:15
+
+'Put the analog value back to the known state
+ANALOGVALUE 1 10.0
+
+PRINT "Bump: Delta-P ANALOG"
+
+'Set the Delta-P to be ANALOG
+SETWORD 3431 1
+
+'Force the DeltaP to be out of range so we bump
+ANALOGVALUE 1 20.0
+
+LOOPTILL STATE Idle_Close_Effluent 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:10
+
+'Put the analog value back to the known state
+ANALOGVALUE 1 10.0
+
+LOOPTILL STATE Filter_Pump_On 00:01:00
+LOOPTILL STATE Filter_Open_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat 00:00:10
+LOOPTILL STATE Filter_Open_Effluent 00:01:10
+LOOPTILL STATE Filter_Close_Regen 00:00:10
+LOOPTILL STATE Filter 00:00:10
+
+MODE Idle
+LOOPTILL STATE Idle 00:00:10
+
+' ****************************
+' BUMP WITH PRECOAT PUMP TEST
+' ****************************
+PRINT "Bump: Precoat Pump"
+
+'Set the precoat Pump Enable ON [boolean]
+SETWORD 3550 1
+
+PRINT "Precoat Bump: Idle"
+
+MODE Bump_Auto
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:10
+
+LOOPTILL STATE Filter_Pump_On 00:01:00
+LOOPTILL STATE Filter_Open_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat 00:00:10
+LOOPTILL STATE Filter_Main_Pump_On 00:01:10
+LOOPTILL STATE Filter_Open_Effluent 00:00:10
+LOOPTILL STATE Filter_Close_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat_Pump_Off 00:00:10
+LOOPTILL STATE Filter 00:00:10
+
+PRINT "Precoat Bump: Filter"
+
+MODE Bump_Auto
+LOOPTILL STATE Idle_Close_Effluent 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:10
+
+LOOPTILL STATE Filter_Pump_On 00:01:00
+LOOPTILL STATE Filter_Open_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat 00:00:10
+LOOPTILL STATE Filter_Main_Pump_On 00:01:10
+LOOPTILL STATE Filter_Open_Effluent 00:00:10
+LOOPTILL STATE Filter_Close_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat_Pump_Off 00:00:10
+LOOPTILL STATE Filter 00:00:10
+
+PRINT "Precoat Bump: Delta-P"
+
+'Force the Delta-P to be out of range so we bump
+ANALOGVALUE 1 20.0
+
+LOOPTILL STATE Idle_Close_Effluent 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:10
+
+'Put the analog value back to the known state
+ANALOGVALUE 1 10.0
+
+LOOPTILL STATE Filter_Pump_On 00:01:00
+LOOPTILL STATE Filter_Open_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat 00:00:10
+LOOPTILL STATE Filter_Main_Pump_On 00:01:10
+LOOPTILL STATE Filter_Open_Effluent 00:00:10
+LOOPTILL STATE Filter_Close_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat_Pump_Off 00:00:10
+LOOPTILL STATE Filter 00:00:10
+
+'Set the Filter_Precoat Pump Enable OFF [boolean]
+SETWORD 3550 0
+
+'Set the Delta-P to be NONE
+SETWORD 3431 0
+
+MODE Idle
+LOOPTILL STATE Idle 00:00:10
+
+' ********************
+' SCHEDULE DRAIN TEST
+' ********************
+
+PRINT "Schedule: Drain-Idle"
+
+SCHEDULE DRAIN 1
+
+'Set the Tank Drain option ON [boolean]
+SETWORD 3572 1
+
+'Delay for at least 2 minutes. Should still be in IDLE
+LOOPIN STATE Idle 00:02:30
+
+PRINT "Schedule: Drain-Filter"
+
+MODE Filter
+LOOPTILL STATE Filter 00:02:30
+
+SCHEDULE DRAIN 1
+
+LOOPTILL STATE Main_Drain_On 00:02:30
+LOOPTILL STATE Main_Drain_Off 00:00:30
+LOOPTILL STATE Filter 00:00:30
+
+'Set the Tank Drain option OFF [boolean]
+SETWORD 3572 0
+
+MODE Idle
+LOOPTILL STATE Idle 00:00:10
+
+' **********************
+' SCHEDULE PRECOAT TEST
+' **********************
+
+PRINT "Schedule: Precoat-Idle"
+
+SCHEDULE Filter_Precoat 1
+
+'Set the Filter_Precoat Line option ON [boolean]
+SETWORD 3575 1
+
+'Delay for at least 2 minutes. Should still be in IDLE
+LOOPIN STATE Idle 00:02:30
+
+PRINT "Schedule: Filter_Precoat-Filter"
+
+MODE Filter
+LOOPTILL STATE Filter 00:02:30
+
+SCHEDULE PRECOAT 1
+
+LOOPTILL STATE PLVV_On 00:02:30
+LOOPTILL STATE PLVV_Off 00:00:30
+LOOPTILL STATE Filter 00:00:30
+
+'Set the Filter_Precoat Line option OFF [boolean]
+SETWORD 3575 0
+
+MODE Idle
+LOOPTILL STATE Idle 00:00:10
+
+' *******************
+' SCHEDULE BUMP TEST
+' *******************
+
+PRINT "Schedule: Bump-Idle"
+
+SCHEDULE BUMP 1
+
+'Delay for at least 2 minutes. Should still be in IDLE
+LOOPIN STATE IDLE 00:01:10
+
+PRINT "Schedule: Bump-Filter"
+
+MODE Filter
+LOOPTILL STATE Filter 00:02:30
+
+SCHEDULE BUMP 1
+
+LOOPTILL STATE Idle_Close_Effluent 00:02:30
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:10
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:10
+
+LOOPTILL STATE Filter_Pump_On 00:01:00
+LOOPTILL STATE Filter_Open_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat 00:00:10
+LOOPTILL STATE Filter_Open_Effluent 00:01:10
+LOOPTILL STATE Filter_Close_Regen 00:00:10
+LOOPTILL STATE Filter 00:00:10
+
+PRINT "Schedule: Bump-Block"
+
+SCHEDULE BLOCK 5
+
+SCHEDULE BUMP 1
+
+LOOPIN STATE Filter 00:01:10
+
+PRINT "Schedule: Bump-Block Delta-P"
+
+'Set the Delta-P to be ANALOG
+SETWORD 3431 1
+
+'Force the Delta-P to be out of range so we bump
+ANALOGVALUE 1 20.0
+
+LOOPIN STATE Filter 00:01:10
+
+'Put the analog value back to the known state
+ANALOGVALUE 1 10.0
+
+'Set the Delta-P to be NONE
+SETWORD 3431 0
+
+MODE Idle
+LOOPTILL STATE Idle 00:00:10
+
+'***************************************************************'
+IF CPU_VERSION 3.9.0
+
+' ****************************
+' REMOTE START/STOP TEST
+' ****************************
+PRINT "Remote Start/Stop"
+
+'REMOTE START
+DIGINVALUE 3 1
+
+'We should stay in IDLE becuase we have not turned on the option
+LOOPIN STATE Idle 00:00:05
+
+DIGINVALUE 3 0
+
+'Put us back into idle incase we failed the last step
+MODE Idle
+LOOPTILL STATE Idle 00:00:05
+
+'Turn on our remote option
+SETWORD 3605 1
+
+'Delay for the change to go through
+DELAY 00:00:03
+
+'Go into filter mode
+'REMOTE START
+DIGINVALUE 3 1
+
+LOOPTILL STATE Filter_Pump_On 00:00:10
+
+DIGINVALUE 3 0
+
+LOOPTILL STATE Filter_Open_Regen 00:00:10
+LOOPTILL STATE Filter_Precoat 00:00:10
+
+'REMOTE STOP
+DIGINVALUE 1 0
+
+LOOPTILL STATE Idle 00:00:05
+
+DIGINVALUE 1 1
+
+'Turn off our remote option
+SETWORD 3605 0
+
+' ****************************
+' ALARM RELAY 
+' ****************************
+PRINT "Alarm Relay"
+
+'Check for no alarms
+CHECKFILTERRELAY 11 0
+
+'Now turn off the analog pressure to generate a VACUUM error
+ANALOGVALUE 3 4.0
+
+LOOPTILL STATE Error_No_Vacuum 00:00:15
+
+'Check for alarms
+CHECKFILTERRELAY 11 0
+
+'Turn the analog pressure back to normal
+ANALOGVALUE 3 18.0
+CLEARALARMS
+DELAY 00:00:05
+
+'Check for no alarms
+CHECKFILTERRELAY 11 0
+
+'Turn ON our Alarm Relay option
+SETWORD 3606 1
+DELAY 00:00:03
+
+'Check for no alarms
+CHECKFILTERRELAY 11 0
+
+'Now turn off the analog pressure to generate a VACUUM error
+ANALOGVALUE 3 4.0
+
+LOOPTILL STATE Error_No_Vacuum 00:00:15
+
+'Check for alarms
+CHECKFILTERRELAY 11 1
+
+CLEARALARMS
+DELAY 00:00:05
+
+'Check to see that the alarm is still active
+CHECKFILTERRELAY 11 1
+
+'Turn the analog pressure back to normal
+ANALOGVALUE 3 18.0
+
+DELAY 00:00:05
+
+'Check to see that the alarm is still active
+CHECKFILTERRELAY 11 1
+
+CLEARALARMS
+DELAY 00:00:05
+
+'Check for no alarms
+CHECKFILTERRELAY 11 0
+
+'Turn OFF our Alarm Relay option
+SETWORD 3606 0
+
+ENDIF
+'***************************************************************'
+
+' *************
+' VACUUM ERROR
+' *************
+
+PRINT "Vacuum loss"
+
+' Now turn off the analog pressure to generate a VACUUM error
+ANALOGVALUE 3 4.0
+
+LOOPTILL STATE Error_No_Vacuum 00:00:15
+
+' Turn the analog pressure back to normal
+ANALOGVALUE 3 18.0
+
+CLEARALARMS
+DELAY 00:00:05
+
+' ******************
+' PUMP CONFIRM ERROR
+' ******************
+
+PRINT "Pump Confirm not on"
+
+'Set Pump Confirm OFF
+'SETWORD 3842 1
+DIGINVALUE 2 0
+
+MODE Filter
+
+LOOPTILL STATE Error_No_Main_Pump 00:00:15
+
+'Set Pump Confirm ON
+'SETWORD 3842 3
+DIGINVALUE 2 1
+
+CLEARALARMS
+
+'***************************************************************'
+IF CPU_VERSION 3.9.0
+
+' ****************************
+' RESET Filter TEST 
+' ****************************
+PRINT "Reset Filter"
+
+'Set the air pressure to NONE
+SETWORD 3583 0
+
+'Give the unit time to set itself
+DELAY 00:00:05
+
+'Go into Filter Mode
+MODE Filter
+LOOPTILL STATE Filter 00:02:30
+
+'Run the special code to reconnect to the system
+RECONNECT 00:05:00
+
+LOOPTILL STATE Error_No_Main_Pump 00:00:30
+
+ENDIF
+'***************************************************************'
+
+PRINT "Ending loop " $LOOPCOUNT
+$LOOPCOUNT += 1
+GOTO TOP
+
+EXIT

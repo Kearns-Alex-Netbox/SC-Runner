@@ -1,0 +1,372 @@
+#Rebig Test
+
+PRINT "INITILIZATION"
+VAR $LOOPCOUNT = 1
+
+' Moved TOP to here so we can end with the auto filter after reset test
+:TOP
+PRINT "Starting loop " $LOOPCOUNT
+
+' Turn Simulate IO ON 41342
+SIMULATEIO
+
+' Set Influent Pressure 40502
+ANALOGVALUE 1 4.0
+
+' Set Effluent Pressure 40504
+ANALOGVALUE 2 4.0
+
+' Set Air Pressure 40506
+ANALOGVALUE 3 10.0
+
+' Set Flow Rate 40508
+ANALOGVALUE 4 4.0
+
+' Unused Input 40500
+'DIGINVALUE 1 1
+
+' Set Pump Confirm High
+DIGINVALUE 2 1
+
+' Unused Input
+'DIGINVALUE 3 0
+
+' Delay Pump Off [seconds] 41300
+SETPARAM 1 0
+
+' Delay Pumprun Confirm Delay [seconds] 41301
+SETPARAM 2 5
+
+' Delay Effluent Close [seconds] 41304
+SETPARAM 5 5
+
+' Delay Effluent Open [seconds] 41305
+SETPARAM 6 5
+
+' Delay Regen Open [seconds] 41307
+SETPARAM 8 5
+
+' Revival Start Delay [seconds] 41308
+SETPARAM 9 1
+
+' Delay Bumpset Off [seconds] 41312
+SETPARAM 13 5
+
+' Delay Bumpset On [seconds] 41313
+SETPARAM 14 2
+
+' Delay Main Pump On [seconds] 41314
+SETPARAM 15 6
+
+' Loop Count 41315
+SETPARAM 16 2
+
+' Delay Precoat [seconds] 41316
+SETPARAM 17 60
+
+' Delay Bumpauto Off [seconds] 41317
+SETPARAM 18 5
+
+' Delay Bumpauto On [seconds] 41318
+SETPARAM 19 5
+
+' Delay Fireman On [seconds] 41320
+SETPARAM 21 5
+
+' Delay Flexclean Pump On [seconds] 41329
+SETPARAM 30 20
+
+' Delay Precoat Pump Off [seconds] 41330
+SETPARAM 31 5
+
+' Delay Flexloop Delay [seconds] 41331
+SETPARAM 32 60
+
+' Analog Pressure Enable [boolean] 41341
+SETPARAM 42 1
+
+' Delta-P Disable [boolean] 41345
+SETPARAM 46 0
+
+' Delta-P Delay [seconds] 41355
+SETPARAM 56 5
+
+' Auto Restart Enable [boolean] 41357
+SETPARAM 58 1
+
+' Block Start Enable [boolean]
+SETWORD 41500 0
+
+' Block Stop Enable [boolean]
+SETWORD 41506 0
+
+' Bump Schedule Enable [boolean]
+SETWORD 41800 0
+
+' Delta-P Trigger [float]
+SETFLOAT 42000 12.0
+
+' Delta-P Time to Bump [seconds]
+SETWORD 42002 5
+
+' Delta-P Bump Enable
+SETWORD 42004 0
+
+' Analog Pressure Trigger [float]
+SETFLOAT 42006 50.0
+
+' Clear any existing alarms
+CLEARALARMS
+DELAY 00:00:05
+
+MODE Idle
+LOOPTILL STATE Idle 00:00:30
+
+' **********
+' IDLE BUMP
+' **********
+PRINT "Bump Cycle: Idle"
+
+MODE Bump_Cycle
+
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:07
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:07
+LOOPTILL STATE Idle 00:00:32
+
+' ****************************
+' FILTER
+' ****************************
+PRINT "Filter"
+
+MODE Filter
+
+LOOPTILL STATE Filter_Open_Regen 00:00:12
+LOOPTILL STATE Filter_Pump_On 00:00:12
+LOOPTILL STATE Filter_Precoat 00:00:12
+LOOPTILL STATE Filter_Open_Effluent 00:01:12
+LOOPTILL STATE Filter_Close_Regen 00:00:12
+LOOPTILL STATE Filter 00:00:12
+
+' ***********
+' FILTER BUMP
+' ***********
+PRINT "Bump Auto: Filter"
+
+MODE Bump_Auto
+
+LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
+LOOPTILL STATE Bump_Auto_Open_Regen 00:00:07
+LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
+
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:07
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:07
+
+LOOPTILL STATE Filter 00:02:32
+
+' ***********
+' FILTER BUMP DELTA-P NONE
+' ***********
+PRINT "Filter Bump: Delta-P NONE"
+
+' Force the Delta-P to be out of range so we bump
+ANALOGVALUE 1 6.0
+
+' We turned Analog Pressure off so we should stay in Filter
+LOOPIN STATE Filter 00:00:10
+
+' Put the analog value back to the known state
+ANALOGVALUE 1 4.0
+
+' ***********
+' FILTER BUMP DELTA-P ANALOG
+' ***********
+PRINT "Filter Bump: Delta-P ANALOG"
+
+' Delta-P Enable [boolean]
+SETPARAM 46 1
+
+' Give the controler some time to save
+DELAY 00:00:05
+
+'Force the Delta-P to be out of range so we bump
+ANALOGVALUE 1 6.0
+
+LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
+LOOPTILL STATE Bump_Auto_Open_Regen 00:00:07
+LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
+
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:07
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:07
+
+'Put the analog value back to the known state
+ANALOGVALUE 1 4.0
+
+LOOPTILL STATE Filter 00:02:32
+
+MODE Idle
+
+LOOPTILL STATE Idle_Open_Regen 00:00:07
+LOOPTILL STATE Idle_Close_Effluent 00:00:07
+LOOPTILL STATE Idle_Close_Regen 00:00:07
+LOOPTILL STATE Idle 00:00:07
+
+' *******************
+' SCHEDULE BUMP IDLE
+' *******************
+PRINT "Schedule: Bump-Idle"
+
+SCHEDULE BUMP 1
+
+'Delay for at least 1 minute. Should still be in IDLE
+LOOPIN STATE Idle 00:01:10
+
+' *******************
+' SCHEDULE BUMP FILTER
+' *******************
+PRINT "Schedule: Bump-Filter"
+
+MODE Filter
+LOOPTILL STATE Filter 00:02:30
+
+SCHEDULE BUMP 1
+
+LOOPTILL STATE Bump_Auto_Fireman_On 00:02:30
+LOOPTILL STATE Bump_Auto_Open_Regen 00:00:07
+LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
+
+LOOPTILL STATE Bump_Auto_Bump_Off 00:00:07
+LOOPTILL STATE Bump_Auto_Bump_On 00:00:07
+
+LOOPTILL STATE Filter 00:02:32
+
+' *******************
+' SCHEDULE BUMP BLOCK FILTER
+' *******************
+PRINT "Schedule: Bump-Block"
+
+SCHEDULE BLOCK 20
+
+SCHEDULE BUMP 1
+
+LOOPIN STATE Filter 00:01:10
+
+' *******************
+' SCHEDULE BUMP BLOCK DELTA-P
+' *******************
+PRINT "Schedule: Bump-Block Delta-P"
+
+'Force the Delta-P to be out of range so we bump
+ANALOGVALUE 1 6.0
+
+LOOPIN STATE Filter 00:00:10
+
+'Put the analog value back to the known state
+ANALOGVALUE 1 4.0
+
+' *******************
+' SCHEDULE BUMP BLOCK AUTO
+' *******************
+PRINT "Schedule: Bump-Block Auto"
+
+MODE Bump_Auto
+
+LOOPIN STATE Filter 00:00:07
+
+MODE IDLE
+LOOPTILL STATE Idle 00:00:20
+
+' ******************
+' PUMP CONFIRM ERROR
+' ******************
+PRINT "Pump Confirm not on"
+
+'Set Pump Confirm OFF
+DIGINVALUE 2 0
+
+MODE Filter
+
+LOOPTILL STATE Error_No_Main_Pump 00:00:30
+
+'Set Pump Confirm ON
+DIGINVALUE 2 1
+
+CLEARALARMS
+DELAY 00:00:05
+
+' **********
+' TANK PRESSURE ERROR
+' **********
+PRINT "Tank Pressure Error"
+
+' Set Effluent Pressure 40504
+ANALOGVALUE 2 15.0
+
+MODE Filter
+
+LOOPTILL STATE Error_Valve_Over_Limit 00:00:20
+
+' Set Effluent Pressure 40504
+ANALOGVALUE 2 4.0
+
+CLEARALARMS
+DELAY 00:00:05
+
+LOOPTILL STATE Idle 00:00:05
+
+' *************
+' VACUUM ERROR
+' *************
+PRINT "Vacuum loss"
+
+'Check for no alarms
+CHECKFILTERRELAY 11 1
+
+' Turn off the analog pressure to generate a VACUUM error
+ANALOGVALUE 3 4.0
+
+LOOPTILL STATE Error_No_Vacuum 00:00:15
+
+'Check for alarms
+CHECKFILTERRELAY 11 0
+
+CLEARALARMS
+DELAY 00:00:05
+
+'Check to see that the alarm is still active
+CHECKFILTERRELAY 11 0
+
+' Turn the analog pressure back to normal
+ANALOGVALUE 3 10.0
+
+DELAY 00:00:05
+
+'Check to see that the alarm is still active
+CHECKFILTERRELAY 11 0
+
+CLEARALARMS
+DELAY 00:00:05
+
+'Check for no alarms
+CHECKFILTERRELAY 11 1
+
+LOOPTILL STATE Idle 00:00:05
+
+' ****************************
+' RESET Filter TEST 
+' ****************************
+'PRINT "Reset Filter"
+
+'Go into Filter Mode
+'MODE Filter
+'LOOPTILL STATE Filter 00:02:00
+
+'Run the special code to reconnect to the system
+'RECONNECT 00:05:00
+
+'LOOPTILL STATE Error_No_Main_Pump 00:00:30
+
+PRINT "Ending loop " $LOOPCOUNT
+$LOOPCOUNT += 1
+GOTO TOP
+
+EXIT

@@ -51,7 +51,7 @@ Imports Newtonsoft.Json
 
 Class RuntimeEngine
 #Const Debug		  = 0
-#Const DebugScript	  = 0
+#Const DebugScript	  = 1
 #Const DebugSkip	  = 0
 #Const DebugLinePause = 0
 
@@ -215,6 +215,7 @@ Class RuntimeEngine
 
 	Dim TASK_VacuumTransfer()				As Integer = {  262,  117}	' Vacuum Transfer mode
 	Dim TASK_ValvePressureOverLimit()		As Integer = {  276,   NK}	' Influent or Effluent sensor is over limit so shut down filter
+	Dim TASK_DeltapLimit()		            As Integer = {  276,   NK}	' Delta p has not been fixed after multiple bumps, shut down the filter
 #End Region
 
 #Region "STATE IDs"
@@ -230,6 +231,8 @@ Class RuntimeEngine
 	Dim STATE_ErrorFlowSensor()							As Integer = {  8,    8} '-	
 	Dim STATE_AuxCheckState()							As Integer = {  9,    9} '- Auxiliary check state with function callback	
 	Dim STATE_ErrorValveOverLimit()						As Integer = { 10,   NK} '- Influent/Effluent valve over pressure limit	
+
+	Dim STATE_ErrorBumpFail()						    As Integer = { 13,   NK} '- After looping through bumps, we have not corrected our Delta-p
 																	   	   
 	Dim STATE_Filter()									As Integer = { 16,   16} '- Filter Mode final state	
 	Dim STATE_FilterStartup()							As Integer = { 17,   NK} '-	
@@ -991,6 +994,9 @@ Class RuntimeEngine
 
 			Case TASK_ValvePressureOverLimit(systemIndex)
 				result = "Valve Pressure Over Limit"
+
+			Case TASK_DeltapLimit(systemIndex)
+				result = "Delta-p Not Resolved"
 				
 			Case Else
 				result = "Unknown (0x" & Task.ToString("X") & ")"
@@ -1185,6 +1191,9 @@ Class RuntimeEngine
 
 		Elseif task = "Valve_Pressure_Over_Limit"
 			result = TASK_ValvePressureOverLimit(systemIndex)
+
+		Elseif task = "Delta-p_Not_Resolved"
+			result = TASK_DeltapLimit(systemIndex)
 		
 		Else
 			' leave the value as it is.
@@ -1233,6 +1242,10 @@ Class RuntimeEngine
 
 			Case STATE_ErrorValveOverLimit(systemIndex)
 				result = "Error Valve Over Limit"
+
+			Case STATE_ErrorBumpFail(systemIndex)
+				result = "Delta-p_Not_Resolved"
+
 
 				'
 				' 
@@ -1840,6 +1853,9 @@ Class RuntimeEngine
 
 		ElseIf state = "Error_Valve_Over_Limit" Then
 			result = STATE_ErrorValveOverLimit(systemIndex)
+
+		ElseIf state = "Delta-p_Not_Resolved"  
+			result = STATE_ErrorBumpFail(systemIndex)
 
 
 
