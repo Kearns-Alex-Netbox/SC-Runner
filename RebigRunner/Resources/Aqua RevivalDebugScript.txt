@@ -187,7 +187,7 @@ SETPARAM 46 1
 ' Give the controler some time to save
 DELAY 00:00:05
 
-'Force the Delta-P to be out of range so we bump
+' Force the Delta-P to be out of range so we bump
 ANALOGVALUE 1 6.0
 
 LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
@@ -197,7 +197,7 @@ LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
 LOOPTILL STATE Bump_Auto_Bump_Off 00:00:07
 LOOPTILL STATE Bump_Auto_Bump_On 00:00:07
 
-'Put the analog value back to the known state
+' Put the analog value back to the known state
 ANALOGVALUE 1 4.0
 
 LOOPTILL STATE Filter 00:02:32
@@ -206,7 +206,6 @@ MODE Idle
 
 LOOPTILL STATE Idle_Open_Regen 00:00:07
 LOOPTILL STATE Idle_Close_Effluent 00:00:07
-'LOOPTILL STATE Idle_Close_Regen 00:00:07
 LOOPTILL STATE Idle 00:00:07
 
 ' *******************
@@ -216,7 +215,7 @@ PRINT "Schedule: Bump-Idle"
 
 SCHEDULE BUMP 1
 
-'Delay for at least 1 minute. Should still be in IDLE
+' Delay for at least 1 minute. Should still be in IDLE
 LOOPIN STATE Idle 00:01:10
 
 ' *******************
@@ -254,12 +253,12 @@ LOOPIN STATE Filter 00:01:10
 ' *******************
 PRINT "Schedule: Bump-Block Delta-P"
 
-'Force the Delta-P to be out of range so we bump
+' Force the Delta-P to be out of range so we bump
 ANALOGVALUE 1 6.0
 
 LOOPIN STATE Filter 00:00:10
 
-'Put the analog value back to the known state
+' Put the analog value back to the known state
 ANALOGVALUE 1 4.0
 
 ' *******************
@@ -279,14 +278,14 @@ LOOPTILL STATE Idle 00:00:20
 ' ******************
 PRINT "Pump Confirm not on"
 
-'Set Pump Confirm OFF
+' Set Pump Confirm OFF
 DIGINVALUE 2 0
 
 MODE Filter
 
 LOOPTILL STATE Error_No_Main_Pump 00:00:30
 
-'Set Pump Confirm ON
+' Set Pump Confirm ON
 DIGINVALUE 2 1
 
 CLEARALARMS
@@ -317,7 +316,7 @@ LOOPTILL STATE Idle 00:00:05
 ' *************
 PRINT "Vacuum loss"
 
-'Check for no alarms
+' Check for no alarms
 CHECKFILTERRELAY 11 1
 
 ' Turn off the analog pressure to generate a VACUUM error
@@ -325,13 +324,13 @@ ANALOGVALUE 3 4.0
 
 LOOPTILL STATE Error_No_Vacuum 00:00:15
 
-'Check for alarms
+' Check for alarms
 CHECKFILTERRELAY 11 0
 
 CLEARALARMS
 DELAY 00:00:05
 
-'Check to see that the alarm is still active
+' Check to see that the alarm is still active
 CHECKFILTERRELAY 11 0
 
 ' Turn the analog pressure back to normal
@@ -339,13 +338,13 @@ ANALOGVALUE 3 10.0
 
 DELAY 00:00:05
 
-'Check to see that the alarm is still active
+' Check to see that the alarm is still active
 CHECKFILTERRELAY 11 0
 
 CLEARALARMS
 DELAY 00:00:05
 
-'Check for no alarms
+' Check for no alarms
 CHECKFILTERRELAY 11 1
 
 LOOPTILL STATE Idle 00:00:05
@@ -363,6 +362,7 @@ LOOPTILL STATE Filter 00:02:30
 ANALOGVALUE 1 8.5
 
 ' 1st bump
+Print "Revive Fail - 1st bump"
 LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
 LOOPTILL STATE Bump_Auto_Open_Regen 00:00:07
 LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
@@ -372,6 +372,7 @@ LOOPTILL STATE Bump_Auto_Bump_On 00:00:07
 
 ' 2nd bump
 LOOPTILL STATE Bump_Auto_Fireman_On 00:02:40
+Print "Revive Fail - 2nd bump"
 LOOPTILL STATE Bump_Auto_Open_Regen 00:00:07
 LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
 
@@ -380,7 +381,7 @@ LOOPTILL STATE Bump_Auto_Bump_On 00:00:07
 
 LOOPTILL STATE Delta-p_Not_Resolved 00:02:40
 
-'Put the analog value back to the known state
+' Put the analog value back to the known state
 ANALOGVALUE 1 4.0
 
 CLEARALARMS
@@ -390,20 +391,16 @@ PRINT "Ending loop " $LOOPCOUNT
 $LOOPCOUNT += 1
 GOTO TOP
 
-
-
-
-
 ' ****************************
 ' RESET Filter TEST 
 ' ****************************
 'PRINT "Reset Filter"
 
-'Go into Filter Mode
+' Go into Filter Mode
 'MODE Filter
 'LOOPTILL STATE Filter 00:02:00
 
-'Run the special code to reconnect to the system
+' Run the special code to reconnect to the system
 'RECONNECT 00:05:00
 
 'LOOPTILL STATE Error_No_Main_Pump 00:00:30

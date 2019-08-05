@@ -80,6 +80,7 @@ Partial Class Grid2x3
 		Me.SetupButton = New System.Windows.Forms.Button()
 		Me.VersionNo = New System.Windows.Forms.Label()
 		Me.Box1 = New System.Windows.Forms.GroupBox()
+		Me.Model1 = New System.Windows.Forms.Label()
 		Me.Indicator1 = New System.Windows.Forms.TextBox()
 		Me.Document1 = New System.Windows.Forms.Button()
 		Me.Label14 = New System.Windows.Forms.Label()
@@ -90,6 +91,7 @@ Partial Class Grid2x3
 		Me.Label9 = New System.Windows.Forms.Label()
 		Me.Label8 = New System.Windows.Forms.Label()
 		Me.Box2 = New System.Windows.Forms.GroupBox()
+		Me.Model2 = New System.Windows.Forms.Label()
 		Me.Indicator2 = New System.Windows.Forms.TextBox()
 		Me.Document2 = New System.Windows.Forms.Button()
 		Me.Label15 = New System.Windows.Forms.Label()
@@ -100,6 +102,7 @@ Partial Class Grid2x3
 		Me.Label20 = New System.Windows.Forms.Label()
 		Me.Label21 = New System.Windows.Forms.Label()
 		Me.Box3 = New System.Windows.Forms.GroupBox()
+		Me.Model3 = New System.Windows.Forms.Label()
 		Me.Indicator3 = New System.Windows.Forms.TextBox()
 		Me.Document3 = New System.Windows.Forms.Button()
 		Me.Label22 = New System.Windows.Forms.Label()
@@ -110,6 +113,7 @@ Partial Class Grid2x3
 		Me.Label27 = New System.Windows.Forms.Label()
 		Me.Label28 = New System.Windows.Forms.Label()
 		Me.Box4 = New System.Windows.Forms.GroupBox()
+		Me.Model4 = New System.Windows.Forms.Label()
 		Me.Indicator4 = New System.Windows.Forms.TextBox()
 		Me.Document4 = New System.Windows.Forms.Button()
 		Me.Label29 = New System.Windows.Forms.Label()
@@ -120,6 +124,7 @@ Partial Class Grid2x3
 		Me.Label34 = New System.Windows.Forms.Label()
 		Me.Label35 = New System.Windows.Forms.Label()
 		Me.Box5 = New System.Windows.Forms.GroupBox()
+		Me.Model5 = New System.Windows.Forms.Label()
 		Me.Indicator5 = New System.Windows.Forms.TextBox()
 		Me.Document5 = New System.Windows.Forms.Button()
 		Me.Label36 = New System.Windows.Forms.Label()
@@ -130,6 +135,7 @@ Partial Class Grid2x3
 		Me.Label41 = New System.Windows.Forms.Label()
 		Me.Label42 = New System.Windows.Forms.Label()
 		Me.Box6 = New System.Windows.Forms.GroupBox()
+		Me.Model6 = New System.Windows.Forms.Label()
 		Me.Indicator6 = New System.Windows.Forms.TextBox()
 		Me.Document6 = New System.Windows.Forms.Button()
 		Me.Label43 = New System.Windows.Forms.Label()
@@ -145,12 +151,6 @@ Partial Class Grid2x3
 		Me.Indicator2t = New System.Windows.Forms.TextBox()
 		Me.Indicator6t = New System.Windows.Forms.TextBox()
 		Me.Indicator4t = New System.Windows.Forms.TextBox()
-		Me.Model1 = New System.Windows.Forms.Label()
-		Me.Model2 = New System.Windows.Forms.Label()
-		Me.Model3 = New System.Windows.Forms.Label()
-		Me.Model4 = New System.Windows.Forms.Label()
-		Me.Model5 = New System.Windows.Forms.Label()
-		Me.Model6 = New System.Windows.Forms.Label()
 		Me.Box1.SuspendLayout
 		Me.Box2.SuspendLayout
 		Me.Box3.SuspendLayout
@@ -259,7 +259,7 @@ Partial Class Grid2x3
 		Me.Close6.BackgroundImage = Global.Runner.My.Resources.Resources.close
 		Me.Close6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Close6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Close6.Location = New System.Drawing.Point(253, 28)
+		Me.Close6.Location = New System.Drawing.Point(253, 35)
 		Me.Close6.Name = "Close6"
 		Me.Close6.Size = New System.Drawing.Size(33, 33)
 		Me.Close6.TabIndex = 4
@@ -270,7 +270,7 @@ Partial Class Grid2x3
 		Me.Close5.BackgroundImage = Global.Runner.My.Resources.Resources.close
 		Me.Close5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Close5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Close5.Location = New System.Drawing.Point(253, 28)
+		Me.Close5.Location = New System.Drawing.Point(253, 35)
 		Me.Close5.Name = "Close5"
 		Me.Close5.Size = New System.Drawing.Size(33, 33)
 		Me.Close5.TabIndex = 4
@@ -281,7 +281,7 @@ Partial Class Grid2x3
 		Me.Close4.BackgroundImage = Global.Runner.My.Resources.Resources.close
 		Me.Close4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Close4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Close4.Location = New System.Drawing.Point(253, 28)
+		Me.Close4.Location = New System.Drawing.Point(253, 35)
 		Me.Close4.Name = "Close4"
 		Me.Close4.Size = New System.Drawing.Size(33, 33)
 		Me.Close4.TabIndex = 4
@@ -292,7 +292,7 @@ Partial Class Grid2x3
 		Me.Close3.BackgroundImage = Global.Runner.My.Resources.Resources.close
 		Me.Close3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Close3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Close3.Location = New System.Drawing.Point(253, 28)
+		Me.Close3.Location = New System.Drawing.Point(253, 35)
 		Me.Close3.Name = "Close3"
 		Me.Close3.Size = New System.Drawing.Size(33, 33)
 		Me.Close3.TabIndex = 4
@@ -303,7 +303,7 @@ Partial Class Grid2x3
 		Me.Close2.BackgroundImage = Global.Runner.My.Resources.Resources.close
 		Me.Close2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Close2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Close2.Location = New System.Drawing.Point(253, 28)
+		Me.Close2.Location = New System.Drawing.Point(253, 35)
 		Me.Close2.Name = "Close2"
 		Me.Close2.Size = New System.Drawing.Size(33, 33)
 		Me.Close2.TabIndex = 4
@@ -314,7 +314,7 @@ Partial Class Grid2x3
 		Me.Close1.BackgroundImage = Global.Runner.My.Resources.Resources.close
 		Me.Close1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Close1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Close1.Location = New System.Drawing.Point(253, 28)
+		Me.Close1.Location = New System.Drawing.Point(253, 35)
 		Me.Close1.Name = "Close1"
 		Me.Close1.Size = New System.Drawing.Size(33, 33)
 		Me.Close1.TabIndex = 4
@@ -709,11 +709,20 @@ Partial Class Grid2x3
 		Me.Box1.TabStop = false
 		Me.Box1.Text = "Box 1"
 		'
+		'Model1
+		'
+		Me.Model1.AutoSize = true
+		Me.Model1.Location = New System.Drawing.Point(34, 18)
+		Me.Model1.Name = "Model1"
+		Me.Model1.Size = New System.Drawing.Size(39, 13)
+		Me.Model1.TabIndex = 17
+		Me.Model1.Text = "Label1"
+		'
 		'Indicator1
 		'
 		Me.Indicator1.Enabled = false
 		Me.Indicator1.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Indicator1.Location = New System.Drawing.Point(193, 28)
+		Me.Indicator1.Location = New System.Drawing.Point(193, 35)
 		Me.Indicator1.Multiline = true
 		Me.Indicator1.Name = "Indicator1"
 		Me.Indicator1.ReadOnly = true
@@ -725,7 +734,7 @@ Partial Class Grid2x3
 		Me.Document1.BackgroundImage = Global.Runner.My.Resources.Resources.download
 		Me.Document1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Document1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Document1.Location = New System.Drawing.Point(133, 28)
+		Me.Document1.Location = New System.Drawing.Point(133, 35)
 		Me.Document1.Name = "Document1"
 		Me.Document1.Size = New System.Drawing.Size(33, 33)
 		Me.Document1.TabIndex = 2
@@ -828,11 +837,20 @@ Partial Class Grid2x3
 		Me.Box2.TabStop = false
 		Me.Box2.Text = "Box 2"
 		'
+		'Model2
+		'
+		Me.Model2.AutoSize = true
+		Me.Model2.Location = New System.Drawing.Point(34, 18)
+		Me.Model2.Name = "Model2"
+		Me.Model2.Size = New System.Drawing.Size(39, 13)
+		Me.Model2.TabIndex = 18
+		Me.Model2.Text = "Label2"
+		'
 		'Indicator2
 		'
 		Me.Indicator2.Enabled = false
 		Me.Indicator2.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Indicator2.Location = New System.Drawing.Point(193, 28)
+		Me.Indicator2.Location = New System.Drawing.Point(193, 35)
 		Me.Indicator2.Multiline = true
 		Me.Indicator2.Name = "Indicator2"
 		Me.Indicator2.ReadOnly = true
@@ -844,7 +862,7 @@ Partial Class Grid2x3
 		Me.Document2.BackgroundImage = Global.Runner.My.Resources.Resources.download
 		Me.Document2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Document2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Document2.Location = New System.Drawing.Point(133, 28)
+		Me.Document2.Location = New System.Drawing.Point(133, 35)
 		Me.Document2.Name = "Document2"
 		Me.Document2.Size = New System.Drawing.Size(33, 33)
 		Me.Document2.TabIndex = 2
@@ -947,11 +965,20 @@ Partial Class Grid2x3
 		Me.Box3.TabStop = false
 		Me.Box3.Text = "Box 3"
 		'
+		'Model3
+		'
+		Me.Model3.AutoSize = true
+		Me.Model3.Location = New System.Drawing.Point(34, 18)
+		Me.Model3.Name = "Model3"
+		Me.Model3.Size = New System.Drawing.Size(39, 13)
+		Me.Model3.TabIndex = 19
+		Me.Model3.Text = "Label3"
+		'
 		'Indicator3
 		'
 		Me.Indicator3.Enabled = false
 		Me.Indicator3.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Indicator3.Location = New System.Drawing.Point(193, 28)
+		Me.Indicator3.Location = New System.Drawing.Point(193, 35)
 		Me.Indicator3.Multiline = true
 		Me.Indicator3.Name = "Indicator3"
 		Me.Indicator3.ReadOnly = true
@@ -963,7 +990,7 @@ Partial Class Grid2x3
 		Me.Document3.BackgroundImage = Global.Runner.My.Resources.Resources.download
 		Me.Document3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Document3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Document3.Location = New System.Drawing.Point(133, 28)
+		Me.Document3.Location = New System.Drawing.Point(133, 35)
 		Me.Document3.Name = "Document3"
 		Me.Document3.Size = New System.Drawing.Size(33, 33)
 		Me.Document3.TabIndex = 2
@@ -1066,11 +1093,20 @@ Partial Class Grid2x3
 		Me.Box4.TabStop = false
 		Me.Box4.Text = "Box 4"
 		'
+		'Model4
+		'
+		Me.Model4.AutoSize = true
+		Me.Model4.Location = New System.Drawing.Point(34, 18)
+		Me.Model4.Name = "Model4"
+		Me.Model4.Size = New System.Drawing.Size(39, 13)
+		Me.Model4.TabIndex = 20
+		Me.Model4.Text = "Label4"
+		'
 		'Indicator4
 		'
 		Me.Indicator4.Enabled = false
 		Me.Indicator4.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Indicator4.Location = New System.Drawing.Point(193, 28)
+		Me.Indicator4.Location = New System.Drawing.Point(193, 35)
 		Me.Indicator4.Multiline = true
 		Me.Indicator4.Name = "Indicator4"
 		Me.Indicator4.ReadOnly = true
@@ -1082,7 +1118,7 @@ Partial Class Grid2x3
 		Me.Document4.BackgroundImage = Global.Runner.My.Resources.Resources.download
 		Me.Document4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Document4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Document4.Location = New System.Drawing.Point(133, 28)
+		Me.Document4.Location = New System.Drawing.Point(133, 35)
 		Me.Document4.Name = "Document4"
 		Me.Document4.Size = New System.Drawing.Size(33, 33)
 		Me.Document4.TabIndex = 2
@@ -1185,11 +1221,20 @@ Partial Class Grid2x3
 		Me.Box5.TabStop = false
 		Me.Box5.Text = "Box 5"
 		'
+		'Model5
+		'
+		Me.Model5.AutoSize = true
+		Me.Model5.Location = New System.Drawing.Point(34, 18)
+		Me.Model5.Name = "Model5"
+		Me.Model5.Size = New System.Drawing.Size(39, 13)
+		Me.Model5.TabIndex = 21
+		Me.Model5.Text = "Label5"
+		'
 		'Indicator5
 		'
 		Me.Indicator5.Enabled = false
 		Me.Indicator5.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Indicator5.Location = New System.Drawing.Point(193, 28)
+		Me.Indicator5.Location = New System.Drawing.Point(193, 35)
 		Me.Indicator5.Multiline = true
 		Me.Indicator5.Name = "Indicator5"
 		Me.Indicator5.ReadOnly = true
@@ -1201,7 +1246,7 @@ Partial Class Grid2x3
 		Me.Document5.BackgroundImage = Global.Runner.My.Resources.Resources.download
 		Me.Document5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Document5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Document5.Location = New System.Drawing.Point(133, 28)
+		Me.Document5.Location = New System.Drawing.Point(133, 35)
 		Me.Document5.Name = "Document5"
 		Me.Document5.Size = New System.Drawing.Size(33, 33)
 		Me.Document5.TabIndex = 2
@@ -1304,11 +1349,20 @@ Partial Class Grid2x3
 		Me.Box6.TabStop = false
 		Me.Box6.Text = "Box 6"
 		'
+		'Model6
+		'
+		Me.Model6.AutoSize = true
+		Me.Model6.Location = New System.Drawing.Point(34, 18)
+		Me.Model6.Name = "Model6"
+		Me.Model6.Size = New System.Drawing.Size(39, 13)
+		Me.Model6.TabIndex = 22
+		Me.Model6.Text = "Label6"
+		'
 		'Indicator6
 		'
 		Me.Indicator6.Enabled = false
 		Me.Indicator6.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Indicator6.Location = New System.Drawing.Point(193, 28)
+		Me.Indicator6.Location = New System.Drawing.Point(193, 35)
 		Me.Indicator6.Multiline = true
 		Me.Indicator6.Name = "Indicator6"
 		Me.Indicator6.ReadOnly = true
@@ -1320,7 +1374,7 @@ Partial Class Grid2x3
 		Me.Document6.BackgroundImage = Global.Runner.My.Resources.Resources.download
 		Me.Document6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
 		Me.Document6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.Document6.Location = New System.Drawing.Point(133, 28)
+		Me.Document6.Location = New System.Drawing.Point(133, 35)
 		Me.Document6.Name = "Document6"
 		Me.Document6.Size = New System.Drawing.Size(33, 33)
 		Me.Document6.TabIndex = 2
@@ -1461,60 +1515,6 @@ Partial Class Grid2x3
 		Me.Indicator4t.ReadOnly = true
 		Me.Indicator4t.Size = New System.Drawing.Size(10, 10)
 		Me.Indicator4t.TabIndex = 20
-		'
-		'Model1
-		'
-		Me.Model1.AutoSize = true
-		Me.Model1.Location = New System.Drawing.Point(34, 18)
-		Me.Model1.Name = "Model1"
-		Me.Model1.Size = New System.Drawing.Size(39, 13)
-		Me.Model1.TabIndex = 17
-		Me.Model1.Text = "Label1"
-		'
-		'Model2
-		'
-		Me.Model2.AutoSize = true
-		Me.Model2.Location = New System.Drawing.Point(34, 18)
-		Me.Model2.Name = "Model2"
-		Me.Model2.Size = New System.Drawing.Size(39, 13)
-		Me.Model2.TabIndex = 18
-		Me.Model2.Text = "Label2"
-		'
-		'Model3
-		'
-		Me.Model3.AutoSize = true
-		Me.Model3.Location = New System.Drawing.Point(34, 18)
-		Me.Model3.Name = "Model3"
-		Me.Model3.Size = New System.Drawing.Size(39, 13)
-		Me.Model3.TabIndex = 19
-		Me.Model3.Text = "Label3"
-		'
-		'Model4
-		'
-		Me.Model4.AutoSize = true
-		Me.Model4.Location = New System.Drawing.Point(34, 18)
-		Me.Model4.Name = "Model4"
-		Me.Model4.Size = New System.Drawing.Size(39, 13)
-		Me.Model4.TabIndex = 20
-		Me.Model4.Text = "Label4"
-		'
-		'Model5
-		'
-		Me.Model5.AutoSize = true
-		Me.Model5.Location = New System.Drawing.Point(34, 18)
-		Me.Model5.Name = "Model5"
-		Me.Model5.Size = New System.Drawing.Size(39, 13)
-		Me.Model5.TabIndex = 21
-		Me.Model5.Text = "Label5"
-		'
-		'Model6
-		'
-		Me.Model6.AutoSize = true
-		Me.Model6.Location = New System.Drawing.Point(34, 18)
-		Me.Model6.Name = "Model6"
-		Me.Model6.Size = New System.Drawing.Size(39, 13)
-		Me.Model6.TabIndex = 22
-		Me.Model6.Text = "Label6"
 		'
 		'Grid2x3
 		'

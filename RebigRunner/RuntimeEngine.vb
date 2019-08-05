@@ -784,7 +784,7 @@ Class RuntimeEngine
 			If thisServerInfo.ExitCommand = 1 Then
 				thisModelLabel.Text = ""
 			Else
-				thisModelLabel.Text = thisModel
+				thisModelLabel.Text = thisModel & ":" & thisSerialNumber
 			End If
 		End If
 	End Sub
