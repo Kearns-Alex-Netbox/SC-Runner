@@ -153,8 +153,8 @@ PRINT "Bump Auto: Filter"
 
 MODE Bump_Auto
 
-LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
 LOOPTILL STATE Bump_Auto_Open_Regen 00:00:07
+LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
 LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
 
 LOOPTILL STATE Bump_Auto_Bump_Off 00:00:07
@@ -190,8 +190,8 @@ DELAY 00:00:05
 ' Force the Delta-P to be out of range so we bump
 ANALOGVALUE 1 6.0
 
-LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
 LOOPTILL STATE Bump_Auto_Open_Regen 00:00:07
+LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
 LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
 
 LOOPTILL STATE Bump_Auto_Bump_Off 00:00:07
@@ -205,7 +205,7 @@ LOOPTILL STATE Filter 00:02:32
 MODE Idle
 
 LOOPTILL STATE Idle_Open_Regen 00:00:07
-LOOPTILL STATE Idle_Close_Effluent 00:00:07
+LOOPTILL STATE Idle_Close_Effluent 00:00:12
 LOOPTILL STATE Idle 00:00:07
 
 ' *******************
@@ -228,8 +228,8 @@ LOOPTILL STATE Filter 00:02:30
 
 SCHEDULE BUMP 1
 
-LOOPTILL STATE Bump_Auto_Fireman_On 00:02:30
-LOOPTILL STATE Bump_Auto_Open_Regen 00:00:07
+LOOPTILL STATE Bump_Auto_Open_Regen 00:02:30
+LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
 LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
 
 LOOPTILL STATE Bump_Auto_Bump_Off 00:00:07
@@ -363,17 +363,17 @@ ANALOGVALUE 1 8.5
 
 ' 1st bump
 Print "Revive Fail - 1st bump"
-LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
 LOOPTILL STATE Bump_Auto_Open_Regen 00:00:07
+LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
 LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
 
 LOOPTILL STATE Bump_Auto_Bump_Off 00:00:07
 LOOPTILL STATE Bump_Auto_Bump_On 00:00:07
 
 ' 2nd bump
-LOOPTILL STATE Bump_Auto_Fireman_On 00:02:40
+LOOPTILL STATE Bump_Auto_Open_Regen 00:02:40
 Print "Revive Fail - 2nd bump"
-LOOPTILL STATE Bump_Auto_Open_Regen 00:00:07
+LOOPTILL STATE Bump_Auto_Fireman_On 00:00:07
 LOOPTILL STATE Bump_Auto_Close_Effluent 00:00:07
 
 LOOPTILL STATE Bump_Auto_Bump_Off 00:00:07

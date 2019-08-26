@@ -51,7 +51,7 @@ Imports Newtonsoft.Json
 
 Class RuntimeEngine
 #Const Debug		  = 0
-#Const DebugScript	  = 1
+#Const DebugScript	  = 0
 #Const DebugSkip	  = 0
 #Const DebugLinePause = 0
 
